@@ -68,4 +68,41 @@ public class JobTest {
     public void testJobsForEquality(){
         assertNotEquals(jobTest1.getId(),jobTest3.getId());
     }
+
+    @Test
+    public void testContainsBlankLineBeforeAndAfterJobProperties(){
+        char beforeLine = jobTest3.toString().charAt(0);
+        char afterLine = jobTest3.toString().charAt(jobTest3.toString().length()-1);
+        assertEquals('\n',beforeLine);
+        assertEquals('\n',afterLine);
+    }
+    @Test
+    public void testStringAssignsCorrectDataAndValuesForEachField(){
+        String data = String.format("\nID: %d\n"+
+                        "Name: %s\n"+
+                        "Employer: %s\n" +
+                        "Location: %s\n" +
+                        "Position Type: %s\n" +
+                        "Core Competency: %s\n",jobTest3.getId(), jobTest3.getName(), jobTest3.getEmployer(), jobTest3.getLocation(),
+                jobTest3.getPositionType(), jobTest3.getCoreCompetency());
+        assertEquals(data,jobTest3.toString());
+    }
+    @Test
+    public void testingForEmptyValues(){
+        jobTest4.getEmployer().setValue("");
+        jobTest4.getPositionType().setValue("");
+        String output = String.format("\nID: %d\n" +
+                "Name: %s\n" +
+                "Employer: Data Not Available\n" +
+                "Location: %s\n" +
+                "Position Type: Data Not Available\n" +
+                "Core Competency: %s\n",jobTest4.getId(), jobTest4.getName(), jobTest4.getLocation(), jobTest4.getCoreCompetency());
+
+        assertEquals(output, jobTest4.toString());
+
+    }
+    @Test
+    public void testNoJobFound(){
+        assertEquals("OOPS! This job does not seem to exist.",jobTest1.toString());
+    }
 }
